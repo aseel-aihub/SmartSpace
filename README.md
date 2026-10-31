@@ -2,7 +2,7 @@
 
 An intelligent interior design platform that turns room dimensions and photos into functional, furnished spaces. 
 
-🔗 **Live Demo:** https://aseel-aihub.github.io/SmartSpace/
+🔗 **Live Demo:** [https://aseel-aihub.github.io/SmartSpace/](https://aseel-aihub.github.io/SmartSpace/)
 
 ---
 
