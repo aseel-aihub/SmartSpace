@@ -34,7 +34,7 @@ git clone [https://github.com/aseel-aihub/SmartSpace.git](https://github.com/ase
 cd SmartSpace
 open index.html
 
-### Repository Structure
+Repository Structure
 SmartSpace/
 ├── index.html              # Main application
 ├── css/style.css           # Design system and styles
