@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SmartSpace — AI Interior Design</title>
+<link rel="icon" href="assets/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============================ SIGN IN ============================ -->
+<section class="signin" id="signin">
+  <div class="sky" id="sky" aria-hidden="true"></div>
+  <div class="signin-inner">
+    <div class="signin-mark"><img src="assets/mark.png" alt=""></div>
+    <h1 class="wordmark">SmartSpace</h1>
+    <p class="tagline">AI Interior Design</p>
+    <form class="signin-form" id="signinForm" novalidate>
+      <label class="field"><span>Name</span><input id="siName" type="text" autocomplete="given-name" placeholder="Your name"></label>
+      <label class="field"><span>Email</span><input id="siEmail" type="email" autocomplete="email" placeholder="name@example.com"></label>
+      <p class="form-error" id="siError" hidden></p>
+      <button class="btn btn-primary" type="submit">Sign in</button>
+      <p class="fineprint">Prototype sign-in: your details stay in this browser only.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ============================ APP ============================ -->
+<div class="app" id="app" hidden>
+  <header class="topbar">
+    <a class="brand" href="#" id="brandHome" aria-label="SmartSpace home">
+      <img src="assets/mark.png" alt="">
+      <span>SmartSpace</span>
+    </a>
+    <nav class="stepper" aria-label="Progress">
+      <ol>
+        <li data-step="room"><span class="dot"></span><span class="lbl">Room</span></li>
+        <li data-step="prefs"><span class="dot"></span><span class="lbl">Preferences</span></li>
+        <li data-step="design"><span class="dot"></span><span class="lbl">Design</span></li>
+        <li data-step="list"><span class="dot"></span><span class="lbl">Shopping list</span></li>
+      </ol>
+    </nav>
+    <div class="top-actions">
+      <button class="btn btn-ghost" id="openAdmin">Admin</button>
+      <button class="avatar" id="signOut" title="Sign out"><span id="avatarInitial">A</span></button>
+    </div>
+  </header>
+
+  <!-- ---------------- STEP 1: ROOM ---------------- -->
+  <main class="view" id="view-room">
+    <div class="view-head">
+      <h1>Start with your room</h1>
+      <p>Upload a photo and enter the real size of the room. The photo is analyzed in your browser.</p>
+    </div>
+    <div class="room-grid">
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload a room photo">
+        <input type="file" id="photoInput" accept="image/*" hidden>
+        <div class="dz-empty" id="dzEmpty">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 34l10-12 8 9 6-7 8 10M8 10h32v28H8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="31" cy="17" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          <p><strong>Upload room photo</strong></p>
+          <p class="muted">Click or drop a JPG or PNG</p>
+        </div>
+        <img id="roomPreview" alt="Your room" hidden>
+        <button class="chip-btn" id="changePhoto" type="button" hidden>Change photo</button>
+      </div>
+
+      <div class="panel">
+        <h2>Room details</h2>
+        <div class="dims">
+          <label class="field"><span>Width (m)</span><input id="roomW" type="number" min="2" max="10" step="0.1" value="4.0"></label>
+          <label class="field"><span>Length (m)</span><input id="roomL" type="number" min="2" max="10" step="0.1" value="4.5"></label>
+          <label class="field"><span>Height (m)</span><input id="roomH" type="number" min="2.2" max="5" step="0.1" value="2.8"></label>
+        </div>
+        <fieldset class="field">
+          <legend>Room type</legend>
+          <div class="segmented" id="roomTypes"></div>
+        </fieldset>
+        <p class="form-error" id="roomError" hidden></p>
+        <button class="btn btn-primary block" id="analyzeBtn">Analyze room</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ---------------- STEP 2: PREFERENCES ---------------- -->
+  <main class="view" id="view-prefs">
+    <button class="back" id="backToRoom">← Room</button>
+    <div class="view-head">
+      <h1>Set your style and budget</h1>
+      <p>We read your room's colors and style. Keep them or choose your own direction.</p>
+    </div>
+    <div class="prefs-grid">
+      <div class="panel analysis">
+        <img id="analysisPhoto" alt="Analyzed room">
+        <div class="analysis-body">
+          <p class="muted">Your room reads as</p>
+          <p class="detected" id="detectedStyle">—</p>
+          <div class="palette" id="palette"></div>
+          <p class="muted small" id="analysisStats"></p>
+          <p class="muted small">Detection of existing furniture is planned for the full version.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <fieldset class="field">
+          <legend>Style</legend>
+          <div class="choice-grid" id="styleChoices"></div>
+        </fieldset>
+        <fieldset class="field">
+          <legend>Colors</legend>
+          <div class="segmented" id="colorChoices"></div>
+        </fieldset>
+        <label class="field">
+          <span>Exact budget (SAR)</span>
+          <div class="money"><input id="budget" type="number" min="500" step="100" placeholder="e.g. 8000"><em>SAR</em></div>
+        </label>
+        <div class="quick" id="budgetQuick"></div>
+        <p class="form-error" id="prefsError" hidden></p>
+        <button class="btn btn-primary block" id="generateBtn">Generate design</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ---------------- STEP 3: DESIGN ---------------- -->
+  <main class="view" id="view-design">
+    <button class="back" id="backToPrefs">← Preferences</button>
+    <div class="design-grid">
+      <section class="plan-wrap">
+        <div class="plan-head">
+          <div>
+            <h1 id="designTitle">Your design</h1>
+            <p class="muted" id="designMeta"></p>
+          </div>
+          <span class="fit-badge" id="fitBadge"></span>
+        </div>
+        <div class="plan-frame" id="planFrame"><div class="plan" id="plan"></div></div>
+        <p class="muted small center">Drag items to move them. Items with a red outline overlap or sit outside the room.</p>
+      </section>
+
+      <aside class="panel side">
+        <div class="budget">
+          <div class="budget-row"><span>Total</span><strong id="totalText">0 SAR</strong></div>
+          <div class="meter"><div id="meterFill"></div></div>
+          <p class="muted small" id="budgetLeft"></p>
+        </div>
+        <div class="select-banner" id="selectBanner" hidden>
+          Select the item to replace
+          <button class="link-btn" id="cancelSelect">Cancel</button>
+        </div>
+        <ul class="items" id="itemList"></ul>
+        <p class="muted small" id="droppedNote" hidden></p>
+        <div class="decision">
+          <p class="q">Do you approve this design?</p>
+          <button class="btn btn-primary block" id="approveBtn">Approve design</button>
+          <button class="btn btn-secondary block" id="alternativesBtn">Request suggested alternatives</button>
+          <button class="link-btn" id="exitBtn">Exit without saving</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- ---------------- STEP 4: SHOPPING LIST ---------------- -->
+  <main class="view" id="view-list">
+    <button class="back" id="backToDesign">← Design</button>
+    <div class="view-head">
+      <h1>Your shopping list</h1>
+      <p id="listMeta"></p>
+    </div>
+    <div class="list-grid">
+      <div class="panel">
+        <table class="shop-table">
+          <thead><tr><th>Item</th><th>Store</th><th class="num">Price</th><th></th></tr></thead>
+          <tbody id="shopRows"></tbody>
+          <tfoot><tr><td colspan="2">Total</td><td class="num" id="shopTotal"></td><td></td></tr></tfoot>
+        </table>
+      </div>
+      <div class="panel actions">
+        <button class="btn btn-primary block" id="saveBtn">Save design</button>
+        <button class="btn btn-secondary block" id="exportBtn">Export list (CSV)</button>
+        <button class="btn btn-secondary block" id="printBtn">Print list</button>
+        <button class="link-btn" id="newDesignBtn">Start a new room</button>
+        <p class="muted small">Stores, products, and prices in this prototype are fictional.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ---------------- ADMIN ---------------- -->
+  <main class="view" id="view-admin">
+    <div class="view-head admin-head">
+      <div>
+        <h1>Administration</h1>
+        <p>Manage the furniture catalog and the store data used for recommendations.</p>
+      </div>
+      <button class="btn btn-ghost" id="closeAdmin">Back</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-tab="catalog">Furniture catalog</button>
+      <button role="tab" class="tab" aria-selected="false" data-tab="stores">Store data sources</button>
+    </div>
+
+    <section class="panel tab-panel" id="tab-catalog">
+      <form class="add-form" id="addProduct">
+        <input name="name" placeholder="Product name" required>
+        <select name="category" required></select>
+        <input name="w" type="number" placeholder="Width (cm)" min="10" required>
+        <input name="d" type="number" placeholder="Depth (cm)" min="10" required>
+        <input name="price" type="number" placeholder="Price (SAR)" min="1" required>
+        <select name="store" required></select>
+        <select name="style" required></select>
+        <input name="color" type="color" value="#b6a2f0" aria-label="Main color">
+        <button class="btn btn-primary" type="submit">Add product</button>
+      </form>
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead><tr><th>Product</th><th>Category</th><th>Size (cm)</th><th>Style</th><th>Store</th><th class="num">Price (SAR)</th><th></th></tr></thead>
+          <tbody id="catalogRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel tab-panel" id="tab-stores" hidden>
+      <div class="import">
+        <label class="field"><span>Store</span><select id="importStore"></select></label>
+        <label class="field"><span>Product file (JSON or CSV)</span><input type="file" id="importFile" accept=".json,.csv"></label>
+        <button class="btn btn-primary" id="importBtn">Import products</button>
+      </div>
+      <p class="muted small">CSV columns: name, category, w, d, price, style, color</p>
+      <p class="form-error" id="importMsg" hidden></p>
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead><tr><th>Store</th><th>Type</th><th>City</th><th>Data source</th><th class="num">Products</th><th>Last update</th></tr></thead>
+          <tbody id="storeRows"></tbody>
+        </table>
+      </div>
+      <button class="link-btn" id="resetData">Reset demo data</button>
+    </section>
+  </main>
+</div>
+
+<!-- ============================ DIALOGS ============================ -->
+<dialog class="sheet" id="altDialog">
+  <div class="sheet-head"><h2 id="altTitle">Suggested alternatives</h2><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <p class="muted small" id="altNote"></p>
+  <ul class="alt-list" id="altList"></ul>
+</dialog>
+
+<dialog class="sheet small" id="redirectDialog">
+  <div class="sheet-head"><h2>Leaving SmartSpace</h2><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <p id="redirectText"></p>
+  <p class="muted small">This store is fictional, so no external page is opened in the prototype.</p>
+  <button class="btn btn-primary block" data-close>OK</button>
+</dialog>
+
+<dialog class="sheet small" id="exitDialog">
+  <div class="sheet-head"><h2>Exit without saving?</h2><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <p>Your design will be discarded and you will return to the start.</p>
+  <div class="row-btns">
+    <button class="btn btn-secondary" data-close>Keep designing</button>
+    <button class="btn btn-danger" id="confirmExit">Exit</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="printArea" class="print-only"></div>
+
+<script src="js/data.js"></script>
+<script src="js/colorAnalysis.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/match.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
