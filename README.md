@@ -1,7 +1,6 @@
 # SmartSpace — AI Interior Design Platform
 
-An intelligent interior design platform that turns room dimensions and photos into functional, furnished spaces. SmartSpace combines real-time color analysis, 2D floor plan rendering, and multi-store product matching to deliver budget-optimized room designs.
-
+An intelligent interior design platform that turns room dimensions and photos into functional, furnished spaces. 
 🔗 **Live Demo:** https://aseel-aihub.github.io/SmartSpace/
 
 ---
