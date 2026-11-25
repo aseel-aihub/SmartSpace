@@ -79,12 +79,5 @@ All products, stores, prices, and transactions are simulated for demonstration p
 - Aseel Alqahtani
 - Ghada Almutairi
 
-**Supervisor:** Dr. Alkhansaa Abuhashim
-
-**University:** Imam Mohammad Ibn Saud Islamic University (IMSIU)
-
-**Department:** Information Systems
-
----
 
 *Design smarter. Furnish better.*
