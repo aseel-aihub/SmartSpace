@@ -1,6 +1,6 @@
 # SmartSpace — Prototype
 
-Static web prototype of SmartSpace (IS GP1, IMSIU). Open `index.html` in a browser.
+Static web prototype of SmartSpace 
 
 The screens follow the To-Be business process: sign in → room photo, dimensions and type →
 style, colors and exact budget → analysis, recommendations, store matching, 2D layout and checks →
